@@ -30,6 +30,7 @@ fi
 make -j${nproc}
 ls -la 
 make install
+ls -la $prefix/include/coin
 """
 
 # These are the platforms we will build for by default, unless further
