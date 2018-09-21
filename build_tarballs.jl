@@ -19,11 +19,17 @@ cd Cgl-releases-0.59.10/
 update_configure_scripts
 mkdir build
 cd build/
-if [ $target = "x86_64-apple-darwin14" ] || [ $target = "x86_64-w64-mingw32" ] || [ $target = "i686-w64-mingw32" ]; then  export LDFLAGS="-L${prefix}/lib -lOsi -lClp -lOsiClp"; fi
-../configure --prefix=$prefix --with-pic --disable-pkg-config --host=${target} --enable-shared --enable-static --enable-dependency-linking lt_cv_deplibs_check_method=pass_all --with-glpk-lib="-L${prefix}/lib -lcoinglpk" --with-glpk-incdir="$prefix/include/coin/ThirdParty" --with-lapack="-L${prefix}/lib -lcoinlapack" --with-blas="-L${prefix}/lib -lcoinblas -lgfortran" --with-coinutils-lib="-L${prefix}/lib -lCoinUtils" --with-coinutils-incdir="$prefix/include/coin" --with-osi-lib="-L${prefix}/lib -lOsi" --with-osi-incdir="$prefix/include/coin" --with-clp-lib="-L${prefix}/lib -lClp" --with-osi-incdir="$prefix/include/coin" --with-metis-lib="-L${prefix}/lib -lcoinmetis" --with-metis-incdir="$prefix/include/coin/ThirdParty" --with-mumps-lib="-L${prefix}/lib -lcoinmumps" --with-mumps-incdir="$prefix/include/coin/ThirdParty" --with-asl-lib="-L${prefix}/lib -lasl" --with-asl-incdir="$prefix/include/asl"
+if [ $target = "x86_64-w64-mingw32" ] || [ $target = "i686-w64-mingw32" ]; then 
+   export LDFLAGS="-L${prefix}/lib -lClp"
+fi
+../configure --prefix=$prefix --disable-pkg-config --with-pic --host=${target} --enable-shared --enable-static --enable-dependency-linking lt_cv_deplibs_check_method=pass_all \
+--with-coinutils-lib="-L${prefix}/lib -lCoinUtils" --with-coinutils-incdir="$prefix/include/coin" \
+--with-osi-lib="-L${prefix}/lib -lOsi" --with-osi-incdir="$prefix/include/coin" \
+--with-osiclp-lib="-L${prefix}/lib -lOsiClp" --with-osiclp-incdir="$prefix/include/coin" \
+--with-osiglpk-lib="-L${prefix}/lib -llibOsiGlpk" --with-osiglpk-incdir="$prefix/include/coin"
 make -j${nproc}
+ls -la 
 make install
-
 """
 
 # These are the platforms we will build for by default, unless further
