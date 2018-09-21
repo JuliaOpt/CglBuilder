@@ -28,15 +28,12 @@ fi
 --with-osiclp-lib="-L${prefix}/lib -lOsiClp" --with-osiclp-incdir="$prefix/include/coin" \
 --with-osiglpk-lib="-L${prefix}/lib -llibOsiGlpk" --with-osiglpk-incdir="$prefix/include/coin"
 make -j${nproc}
-ls -la 
 make install
-ls -la $prefix/include/coin
 """
 
 # These are the platforms we will build for by default, unless further
 # platforms are passed in on the command line
 platforms = [
-   Linux(:i686, libc=:glibc),
    Linux(:x86_64, libc=:glibc),
    Linux(:aarch64, libc=:glibc),
    Linux(:armv7l, libc=:glibc, call_abi=:eabihf),
