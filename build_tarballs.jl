@@ -46,12 +46,13 @@ make install
 # These are the platforms we will build for by default, unless further
 # platforms are passed in on the command line
 platforms = [
-   Linux(:x86_64, libc=:glibc),
-   Linux(:aarch64, libc=:glibc),
-   Linux(:armv7l, libc=:glibc, call_abi=:eabihf),
-   MacOS(:x86_64),
-   Windows(:i686),
-   Windows(:x86_64)
+    Linux(:i686, libc=:glibc),
+    Linux(:x86_64, libc=:glibc),
+    Linux(:aarch64, libc=:glibc),
+    Linux(:armv7l, libc=:glibc, call_abi=:eabihf),
+    MacOS(:x86_64),
+    Windows(:i686),
+    Windows(:x86_64)
 ]
 platforms = expand_gcc_versions(platforms)
 # To fix gcc4 bug in Windows
