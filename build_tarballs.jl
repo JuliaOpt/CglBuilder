@@ -34,11 +34,23 @@ cd build/
 if [ $target = "x86_64-w64-mingw32" ] || [ $target = "i686-w64-mingw32" ]; then
    export LDFLAGS="-L${prefix}/lib -lClp"
 fi
-../configure --prefix=$prefix --disable-pkg-config --with-pic --host=${target} --enable-shared --disable-static \
+
+## STATIC BUILD START
+../configure --prefix=$prefix --disable-pkg-config --with-pic --host=${target} --disable-shared --enable-static \
 --enable-dependency-linking lt_cv_deplibs_check_method=pass_all \
 --with-coinutils-lib="-L${prefix}/lib -lCoinUtils" --with-coinutils-incdir="$prefix/include/coin" \
 --with-osi-lib="-L${prefix}/lib -lOsi" --with-osi-incdir="$prefix/include/coin" \
 --with-osiclp-lib="-L${prefix}/lib -lOsiClp" --with-osiclp-incdir="$prefix/include/coin"
+## STATIC BUILD END
+
+## DYNAMIC BUILD START
+#../configure --prefix=$prefix --disable-pkg-config --with-pic --host=${target} --enable-shared --disable-static \
+#--enable-dependency-linking lt_cv_deplibs_check_method=pass_all \
+#--with-coinutils-lib="-L${prefix}/lib -lCoinUtils" --with-coinutils-incdir="$prefix/include/coin" \
+#--with-osi-lib="-L${prefix}/lib -lOsi" --with-osi-incdir="$prefix/include/coin" \
+#--with-osiclp-lib="-L${prefix}/lib -lOsiClp" --with-osiclp-incdir="$prefix/include/coin"
+## DYNAMIC BUILD END
+
 make -j${nproc}
 make install
 """
