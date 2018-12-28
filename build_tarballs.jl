@@ -31,9 +31,6 @@ if [[ ${target} == *darwin* ]]; then
 fi
 mkdir build
 cd build/
-if [ $target = "x86_64-w64-mingw32" ] || [ $target = "i686-w64-mingw32" ]; then
-   export LDFLAGS="-L${prefix}/lib ${prefix}/lib/libClp.a"
-fi
 
 ## STATIC BUILD START
 ../configure --prefix=$prefix --disable-pkg-config --with-pic --host=${target} --disable-shared --enable-static \
@@ -44,6 +41,9 @@ fi
 ## STATIC BUILD END
 
 ## DYNAMIC BUILD START
+#if [ $target = "x86_64-w64-mingw32" ] || [ $target = "i686-w64-mingw32" ]; then
+#   export LDFLAGS="-L${prefix}/lib ${prefix}/lib/libClp.a"
+#fi
 #../configure --prefix=$prefix --disable-pkg-config --with-pic --host=${target} --enable-shared --disable-static \
 #--enable-dependency-linking lt_cv_deplibs_check_method=pass_all \
 #--with-coinutils-lib="-L${prefix}/lib -lCoinUtils" --with-coinutils-incdir="$prefix/include/coin" \
