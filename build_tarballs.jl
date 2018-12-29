@@ -41,7 +41,18 @@ mkdir build
 cd build/
 export CPPFLAGS="-DNDEBUG -w -DCOIN_USE_MUMPS_MPI_H"
 
-../configure --prefix=$prefix --with-pic --disable-pkg-config --host=${target} --disable-shared --enable-static \
+if [ $target = "x86_64-w64-mingw32" ] || [ $target = "i686-w64-mingw32" ]; then
+  ../configure --prefix=$prefix --with-pic --disable-pkg-config --host=${target} --disable-shared --enable-static \
+  --enable-dependency-linking lt_cv_deplibs_check_method=pass_all \
+  --with-asl-lib="-L${prefix}/lib -lasl" --with-asl-incdir="$prefix/include/asl" \
+  --with-blas="-L${prefix}/lib -lcoinblas" \
+  --with-lapack="-L${prefix}/lib -lcoinlapack" \
+  --with-metis-lib="-L${prefix}/lib -lcoinmetis" --with-metis-incdir="$prefix/include/coin/ThirdParty" \
+  --with-mumps-lib="-L${prefix}/lib -lcoinmumps" --with-mumps-incdir="$prefix/include/coin/ThirdParty" \
+  --with-coinutils-lib="-L${prefix}/lib -lCoinUtils" --with-coinutils-incdir="$prefix/include/coin" \
+  --with-osi-lib="-L${prefix}/lib -lOsi" --with-osi-incdir="$prefix/include/coin" 
+else
+  ../configure --prefix=$prefix --with-pic --disable-pkg-config --host=${target} --disable-shared --enable-static \
   --enable-dependency-linking lt_cv_deplibs_check_method=pass_all \
   --with-asl-lib="-L${prefix}/lib -lasl" --with-asl-incdir="$prefix/include/asl" \
   --with-blas="-L${prefix}/lib -lcoinblas" \
@@ -51,6 +62,7 @@ export CPPFLAGS="-DNDEBUG -w -DCOIN_USE_MUMPS_MPI_H"
   --with-coinutils-lib="-L${prefix}/lib -lCoinUtils" --with-coinutils-incdir="$prefix/include/coin" \
   --with-osi-lib="-L${prefix}/lib -lOsi" --with-osi-incdir="$prefix/include/coin" \
   LDFLAGS=-ldl;
+fi
 
 make -j${nproc}
 make install
@@ -70,12 +82,22 @@ done
 mkdir build
 cd build/
 
-../configure --prefix=$prefix --disable-pkg-config --with-pic --host=${target} --disable-shared --enable-static \
+if [ $target = "x86_64-w64-mingw32" ] || [ $target = "i686-w64-mingw32" ]; then
+  ../configure --prefix=$prefix --disable-pkg-config --with-pic --host=${target} --disable-shared --enable-static \
+  --enable-dependency-linking lt_cv_deplibs_check_method=pass_all \
+  --with-coinutils-lib="-L${prefix}/lib -lCoinUtils" --with-coinutils-incdir="$prefix/include/coin" \
+  --with-osi-lib="-L${prefix}/lib -lOsi" --with-osi-incdir="$prefix/include/coin" \
+  --with-osiclp-lib="-L${prefix}/lib -lOsiClp" --with-osiclp-incdir="$prefix/include/coin" 
+else
+  ../configure --prefix=$prefix --disable-pkg-config --with-pic --host=${target} --disable-shared --enable-static \
   --enable-dependency-linking lt_cv_deplibs_check_method=pass_all \
   --with-coinutils-lib="-L${prefix}/lib -lCoinUtils" --with-coinutils-incdir="$prefix/include/coin" \
   --with-osi-lib="-L${prefix}/lib -lOsi" --with-osi-incdir="$prefix/include/coin" \
   --with-osiclp-lib="-L${prefix}/lib -lOsiClp" --with-osiclp-incdir="$prefix/include/coin" \
   LDFLAGS=-ldl;
+fi
+
+
 
 ## STATIC BUILD END
 
