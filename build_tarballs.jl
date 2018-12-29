@@ -25,14 +25,16 @@ for path in ${LD_LIBRARY_PATH//:/ }; do
         sed -i~ -e "s|$baddir|'$path'|g" $file
     done
 done
-# To fix an OSX toolchain bug. See https://github.com/JuliaPackaging/BinaryBuilder.jl/issues/388
-if [[ ${target} == *darwin* ]]; then
-    export AR=/opt/${target}/bin/${target}-ar
-fi
+
+
 mkdir build
 cd build/
 
 ## STATIC BUILD START
+if [ $target = "x86_64-apple-darwin14" ]; then
+    export AR=/opt/x86_64-apple-darwin14/bin/x86_64-apple-darwin14-ar
+fi
+
 ../configure --prefix=$prefix --disable-pkg-config --with-pic --host=${target} --disable-shared --enable-static \
 --enable-dependency-linking lt_cv_deplibs_check_method=pass_all \
 --with-coinutils-lib="-L${prefix}/lib -lCoinUtils" --with-coinutils-incdir="$prefix/include/coin" \
@@ -41,6 +43,10 @@ cd build/
 ## STATIC BUILD END
 
 ## DYNAMIC BUILD START
+# To fix an OSX toolchain bug. See https://github.com/JuliaPackaging/BinaryBuilder.jl/issues/388
+#if [[ ${target} == *darwin* ]]; then
+#    export AR=/opt/${target}/bin/${target}-ar
+#fi
 #if [ $target = "x86_64-w64-mingw32" ] || [ $target = "i686-w64-mingw32" ]; then
 #   export LDFLAGS="-L${prefix}/lib ${prefix}/lib/libClp.a"
 #fi
