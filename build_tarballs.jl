@@ -41,9 +41,9 @@ mkdir build
 cd build/
 
 if [ $target = "aarch64-linux-gnu" ]; then
-   export CPPFLAGS="-DNDEBUG -w -DCOIN_USE_MUMPS_MPI_H -D__arm__ -std=c++11"
+   export CPPFLAGS="-DNDEBUG -w -DCOIN_USE_MUMPS_MPI_H -D__arm__ -std=c++11 -D_GLIBCXX_USE_CXX11_ABI=1"
 elif [ $target = "arm-linux-gnueabihf" ]; then 
-   export CPPFLAGS="-DNDEBUG -w -DCOIN_USE_MUMPS_MPI_H -D__arm__ -mfpu=neon -std=c++11"
+   export CPPFLAGS="-DNDEBUG -w -DCOIN_USE_MUMPS_MPI_H -D__arm__ -mfpu=neon -std=c++11 -D_GLIBCXX_USE_CXX11_ABI=1"
 else
    export CPPFLAGS="-DNDEBUG -w -DCOIN_USE_MUMPS_MPI_H"
 fi
@@ -160,6 +160,11 @@ platforms = expand_gcc_versions(platforms)
 platforms = setdiff(platforms, [Windows(:x86_64, compiler_abi=CompilerABI(:gcc4)), Windows(:i686, compiler_abi=CompilerABI(:gcc4))])
 push!(platforms, Windows(:i686,compiler_abi=CompilerABI(:gcc6)))
 push!(platforms, Windows(:x86_64,compiler_abi=CompilerABI(:gcc6)))
+
+# It seems Clp in ARM now needs C++11, so gcc4 is not working. 
+# A possible fix is to switch to gcc6 as for windows, but this will require updating all dependencies below too. 
+platforms = setdiff(platforms, [Linux(:armv7l, libc=:glibc, call_abi=:eabihf, compiler_abi=CompilerABI(:gcc4)), Linux(:aarch64, libc=:glibc, compiler_abi=CompilerABI(:gcc4))])
+
 
 # The products that we will ensure are always built
 products(prefix) = [
