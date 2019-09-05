@@ -39,7 +39,14 @@ for path in ${LD_LIBRARY_PATH//:/ }; do
 done
 mkdir build
 cd build/
-export CPPFLAGS="-DNDEBUG -w -DCOIN_USE_MUMPS_MPI_H"
+
+if [ $target = "arm-linux-gnueabihf" ]; then 
+   export CPPFLAGS="-DNDEBUG -w -DCOIN_USE_MUMPS_MPI_H -D__arm__"
+else
+   export CPPFLAGS="-DNDEBUG -w -DCOIN_USE_MUMPS_MPI_H"
+fi
+
+
 
 if [ $target = "x86_64-w64-mingw32" ] || [ $target = "i686-w64-mingw32" ]; then
   ../configure --prefix=$prefix --with-pic --disable-pkg-config --host=${target} --disable-shared --enable-static \
