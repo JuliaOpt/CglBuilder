@@ -40,7 +40,7 @@ done
 mkdir build
 cd build/
 
-if [ $target = "arm-linux-gnueabihf" ]; then 
+if [ $target = "aarch64-linux-gnu" ]; then 
    export CPPFLAGS="-DNDEBUG -w -DCOIN_USE_MUMPS_MPI_H -D__arm__"
 else
    export CPPFLAGS="-DNDEBUG -w -DCOIN_USE_MUMPS_MPI_H"
