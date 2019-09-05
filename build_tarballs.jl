@@ -3,14 +3,14 @@
 using BinaryBuilder
 
 name = "CglBuilder"
-version = v"0.59.10"
+version = v"0.60.2"
 
 # Collection of sources required to build CglBuilder
 sources = [
-   "https://github.com/coin-or/Cgl/archive/releases/0.59.10.tar.gz" =>
-   "2a4038dfeb00b4f4084bbe00b144b6bae4ddfe87873ac5913603af248cb3f1d4",
-   "https://github.com/coin-or/Clp/archive/releases/1.16.11.tar.gz" =>
-    "ac42c00ba95e1e034ae75ba0e3a5ff03b452191e0c9b2f5e2d5e65bf652fb0a1",
+   "https://github.com/coin-or/Cgl/archive/releases/0.60.2.tar.gz" =>
+   "c965b7173ab0e1a6c6d4be785813311e7869ce5333b952f70837309abd82e659",
+   "https://github.com/coin-or/Clp/archive/releases/1.17.3.tar.gz" =>
+    "25f0692fe1daa492e7801770af6991506ae9a8c34a4cae358d017400a02dfcf8",
 
 ]
 
@@ -27,7 +27,7 @@ if [ $target = "x86_64-apple-darwin14" ]; then
 fi
 
 cd $WORKSPACE/srcdir
-cd Clp-releases-1.16.11/
+cd Clp-releases-1.17.3/
 update_configure_scripts
 # temporary fix
 for path in ${LD_LIBRARY_PATH//:/ }; do
@@ -68,7 +68,7 @@ make -j${nproc}
 make install
 
 cd $WORKSPACE/srcdir
-cd Cgl-releases-0.59.10/
+cd Cgl-releases-0.60.2/
 update_configure_scripts
 # temporary fix
 for path in ${LD_LIBRARY_PATH//:/ }; do
@@ -162,11 +162,11 @@ products(prefix) = [
 
 # Dependencies that must be installed before this package can be built
 dependencies = [
-    "https://github.com/JuliaOpt/OsiBuilder/releases/download/v0.107.9-1-static/build_OsiBuilder.v0.107.9.jl",
-    "https://github.com/JuliaOpt/CoinUtilsBuilder/releases/download/v2.10.14-1-static/build_CoinUtilsBuilder.v2.10.14.jl",
+    "https://github.com/JuliaOpt/OsiBuilder/releases/download/v0.108.5-static/build_OsiBuilder.v0.108.5.jl",
+    "https://github.com/JuliaOpt/CoinUtilsBuilder/releases/download/v2.11.3-static/build_CoinUtilsBuilder.v2.11.3.jl",
     "https://github.com/JuliaOpt/COINMumpsBuilder/releases/download/v1.6.0-1-static/build_COINMumpsBuilder.v1.6.0.jl",
     "https://github.com/JuliaOpt/COINMetisBuilder/releases/download/v1.3.5-1-static/build_COINMetisBuilder.v1.3.5.jl",
-    "https://github.com/JuliaOpt/COINLapackBuilder/releases/download/v1.5.6-1-static/build_COINLapackBuilder.v1.5.6.jl",
+    "https://github.com/JuliaOpt/COINLapackBuilder/releases/download/v1.6.0-static/build_COINLapackBuilder.v1.6.0.jl",
     "https://github.com/JuliaOpt/COINBLASBuilder/releases/download/v1.4.6-1-static/build_COINBLASBuilder.v1.4.6.jl",
     "https://github.com/JuliaOpt/ASLBuilder/releases/download/v3.1.0-1-static/build_ASLBuilder.v3.1.0.jl"#,
  #  "https://github.com/juan-pablo-vielma/ClpBuilder/releases/download/v1.16.11-1-static/build_ClpBuilder.v1.16.11.jl"
